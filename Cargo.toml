@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "examples/greengrassv2",
     "examples/apigateway",
     "examples/apigatewaymanagement",
     "examples/applicationautoscaling",
