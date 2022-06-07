@@ -5,6 +5,7 @@
 
 use aws_config::meta::region::RegionProviderChain;
 use aws_sdk_iot::{Client, Error, Region, PKG_VERSION};
+use std::fs;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -49,9 +50,16 @@ async fn create_certificates(
         .send()
         .await?;
 
+    let cert_content = &resp.certificate_pem().unwrap_or_default();
+    let keys_content = &resp.key_pair().unwrap();
+
+    fs::write(cert, &cert_content).expect("Unable to write file");
+    fs::write(pub_key, &keys_content.public_key().unwrap()).expect("Unable to write file");
+    fs::write(key, &keys_content.private_key().unwrap()).expect("Unable to write file");
+
     println!(
         "  certificate:  {}",
-        resp.certificate_pem().as_deref().unwrap_or_default()
+        &cert_content
     );
     println!(
         "  ARN:   {}",
