@@ -26,9 +26,9 @@ struct Opt {
     verbose: bool,
 }
 
-// Get your IoT policy.
-// snippet-start:[iot.rust.get-policy]
-async fn show_the_policy(client: &Client, name: &str, doc: &str) -> Result<(), Error> {
+// Create your IoT policy.
+// snippet-start:[iot.rust.create-policy]
+async fn create_policy(client: &Client, name: &str, doc: &str) -> Result<(), Error> {
     let resp = client
         .create_policy()
         .policy_name(name)
@@ -93,5 +93,5 @@ async fn main() -> Result<(), Error> {
     let shared_config = aws_config::from_env().region(region_provider).load().await;
     let client = Client::new(&shared_config);
 
-    show_the_policy(&client, &name, &doc).await
+    create_policy(&client, &name, &doc).await
 }

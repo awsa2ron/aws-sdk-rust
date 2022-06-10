@@ -22,8 +22,8 @@ struct Opt {
     verbose: bool,
 }
 
-// Lists your IoT things.
-// snippet-start:[iot.rust.list-things]
+// Create your IoT things.
+// snippet-start:[iot.rust.create-things]
 async fn create_thing(client: &Client, name:&str) -> Result<(), Error> {
     let thing = client.create_thing().thing_name(name).send().await?;
 

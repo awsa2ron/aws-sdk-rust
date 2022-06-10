@@ -35,9 +35,9 @@ struct Opt {
     verbose: bool,
 }
 
-// Get your IoT policy.
+// Create your IoT keys and cert.
 // snippet-start:[iot.rust.get-policy]
-async fn create_certificates(
+async fn create_keys_certificates(
     client: &Client,
     cert: &str,
     pub_key: &str,
@@ -116,7 +116,7 @@ async fn main() -> Result<(), Error> {
     let shared_config = aws_config::from_env().region(region_provider).load().await;
     let client = Client::new(&shared_config);
 
-    create_certificates(
+    create_keys_certificates(
         &client,
         &certificate_pem_outfile,
         &public_key_outfile,
