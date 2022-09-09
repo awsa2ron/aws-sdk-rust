@@ -26,18 +26,9 @@ async fn show_cores(client: &Client) -> Result<(), Error> {
     println!("cores:");
 
     for component in resp.components().unwrap() {
-        println!(
-            "    ARN:  {}",
-            component.arn().unwrap_or_default()
-        );
-        println!(
-            "   Name:  {:?}",
-            component.component_name().unwrap()
-        );
-        println!(
-            "Version:  {:?}",
-            component.latest_version().unwrap()
-        );
+        println!("    ARN:  {}", component.arn().unwrap_or_default());
+        println!("   Name:  {:?}", component.component_name().unwrap());
+        println!("Version:  {:?}", component.latest_version().unwrap());
         println!();
     }
 

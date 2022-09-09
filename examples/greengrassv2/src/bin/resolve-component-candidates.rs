@@ -33,14 +33,8 @@ async fn show_components(client: &Client, arn: &str) -> Result<(), Error> {
         "    recipeOutputFormat:  {:?}",
         resp.recipe_output_format().unwrap()
     );
-    println!(
-        "   recipe:  {:?}",
-        resp.recipe().unwrap()
-    );
-    println!(
-        "   tags:  {:?}",
-        resp.tags().unwrap()
-    );
+    println!("   recipe:  {:?}", resp.recipe().unwrap());
+    println!("   tags:  {:?}", resp.tags().unwrap());
     println!();
 
     println!();
@@ -60,7 +54,11 @@ async fn show_components(client: &Client, arn: &str) -> Result<(), Error> {
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     tracing_subscriber::fmt::init();
-    let Opt { region, arn, verbose } = Opt::from_args();
+    let Opt {
+        region,
+        arn,
+        verbose,
+    } = Opt::from_args();
 
     let region_provider = RegionProviderChain::first_try(region.map(Region::new))
         .or_default_provider()

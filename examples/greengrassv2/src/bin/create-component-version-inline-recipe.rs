@@ -26,24 +26,19 @@ struct Opt {
 // Lists your IoT components.
 // snippet-start:[iot.rust.list-component-devices]
 async fn show_components(client: &Client, inline_recipe: &str) -> Result<(), Error> {
-       let blob = Blob::new(inline_recipe);
+    let blob = Blob::new(inline_recipe);
 
-    let resp = client.create_component_version().inline_recipe(blob).send().await?;
+    let resp = client
+        .create_component_version()
+        .inline_recipe(blob)
+        .send()
+        .await?;
 
     println!("components:");
 
-    println!(
-        "    ARN:  {}",
-        resp.arn().unwrap_or_default()
-    );
-    println!(
-        "   Name:  {:?}",
-        resp.component_name().unwrap()
-    );
-    println!(
-        "Version:  {:?}",
-        resp.component_version().unwrap()
-    );
+    println!("    ARN:  {}", resp.arn().unwrap_or_default());
+    println!("   Name:  {:?}", resp.component_name().unwrap());
+    println!("Version:  {:?}", resp.component_version().unwrap());
     println!(
         "    creation timestamp:  {:?}",
         resp.creation_timestamp().unwrap()
@@ -68,7 +63,11 @@ async fn show_components(client: &Client, inline_recipe: &str) -> Result<(), Err
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     tracing_subscriber::fmt::init();
-    let Opt { region,  inline_recipe, verbose } = Opt::from_args();
+    let Opt {
+        region,
+        inline_recipe,
+        verbose,
+    } = Opt::from_args();
 
     let region_provider = RegionProviderChain::first_try(region.map(Region::new))
         .or_default_provider()

@@ -29,14 +29,16 @@ struct Opt {
 // Lists your IoT components.
 // snippet-start:[iot.rust.list-component-devices]
 async fn show_components(client: &Client, arn: &str, artifact_name: &str) -> Result<(), Error> {
-    let resp = client.get_component_version_artifact().arn(arn).artifact_name(artifact_name).send().await?;
+    let resp = client
+        .get_component_version_artifact()
+        .arn(arn)
+        .artifact_name(artifact_name)
+        .send()
+        .await?;
 
     println!("components:");
 
-    println!(
-        "    pre-signed url:  {:?}",
-        resp.pre_signed_url().unwrap()
-    );
+    println!("    pre-signed url:  {:?}", resp.pre_signed_url().unwrap());
 
     println!();
 
@@ -57,7 +59,12 @@ async fn show_components(client: &Client, arn: &str, artifact_name: &str) -> Res
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     tracing_subscriber::fmt::init();
-    let Opt { region, arn, artifact_name, verbose } = Opt::from_args();
+    let Opt {
+        region,
+        arn,
+        artifact_name,
+        verbose,
+    } = Opt::from_args();
 
     let region_provider = RegionProviderChain::first_try(region.map(Region::new))
         .or_default_provider()
